@@ -139,7 +139,7 @@ public class NotificationHelper {
                 .setBubbleMetadata(createBubbleMetadata(icon, pendingIntent))
                 .setContentTitle(notificationTitle)
                 .setSmallIcon(icon)
-                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setCategory(Notification.CATEGORY_CALL)
                 .setShortcutId(BUBBLE_SHORTCUT_ID)
                 .setLocusId(new LocusId(BUBBLE_SHORTCUT_ID))
                 .addPerson(person)
