@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -130,6 +132,12 @@ public class NotificationHelper {
             updateShortcuts(icon);
         Person user = new Person.Builder().setName("You").build();
         Person person = new Person.Builder().setName(notificationTitle).setIcon(icon).build();
+
+        Notification.MessagingStyle style = new Notification.MessagingStyle(user)
+                .addMessage(new Notification.MessagingStyle.Message("", 0, user))
+                .addMessage(new Notification.MessagingStyle.Message("", 0, user))
+                .setGroupConversation(false);
+
         Intent bubbleIntent = new Intent(mContext, BubbleActivity.class);
         bubbleIntent.setAction(Intent.ACTION_VIEW);
         bubbleIntent.putExtra(INTENT_EXTRA_PARAMS_MAP, params);
@@ -139,15 +147,16 @@ public class NotificationHelper {
                 .setBubbleMetadata(createBubbleMetadata(icon, pendingIntent))
                 .setContentTitle(notificationTitle)
                 .setSmallIcon(icon)
-                .setCategory(Notification.CATEGORY_CALL)
+                .setCategory(Notification.CATEGORY_TRANSPORT)
                 .setShortcutId(BUBBLE_SHORTCUT_ID)
                 .setLocusId(new LocusId(BUBBLE_SHORTCUT_ID))
                 .addPerson(person)
                 .setShowWhen(true)
                 .setContentIntent(PendingIntent.getActivity(mContext, REQUEST_CONTENT, bubbleIntent, PendingIntent.FLAG_UPDATE_CURRENT))
-                .setStyle(new Notification.MessagingStyle(user)
-                        .addMessage(new Notification.MessagingStyle.Message(notificationBody, now, person))
-                        .setGroupConversation(false))
+                //.setStyle(new Notification.MessagingStyle(user)
+                //        .addMessage(new Notification.MessagingStyle.Message(notificationBody, now, person))
+                //        .setGroupConversation(false))
+                .setStyle(style)
                 .setWhen(now);
         if(isMinAndroidR()){
             builder.addAction(new Notification.Action.Builder(null, "Click the icon in the end ->", null).build());
