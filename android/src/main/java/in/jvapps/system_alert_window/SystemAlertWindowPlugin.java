@@ -101,12 +101,12 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                     String title = (String) arguments.get(0);
                     String body = (String) arguments.get(1);
                     HashMap<String, Object> params = (HashMap<String, Object>) arguments.get(2);
-                    if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        Log.d(TAG, "Going to show Bubble");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            showBubble(title, body, params);
-                        }
-                    } else {
+                    //if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    //    Log.d(TAG, "Going to show Bubble");
+                    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    //        showBubble(title, body, params);
+                    //    }
+                    //} else {
                         Log.d(TAG, "Going to show System Alert Window");
                         final Intent i = new Intent(mContext, WindowServiceNew.class);
                         i.putExtra(INTENT_EXTRA_PARAMS_MAP, params);
@@ -115,7 +115,7 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                         i.putExtra(INTENT_EXTRA_IS_UPDATE_WINDOW, false);
                         //WindowService.enqueueWork(mContext, i);
                         mContext.startService(i);
-                    }
+                    //}
                     result.success(true);
                 } else {
                     Toast.makeText(mContext, "Please give draw over other apps permission", Toast.LENGTH_LONG).show();
@@ -129,12 +129,12 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                     String updateTitle = (String) updateArguments.get(0);
                     String updateBody = (String) updateArguments.get(1);
                     HashMap<String, Object> updateParams = (HashMap<String, Object>) updateArguments.get(2);
-                    if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-                        Log.d(TAG, "Going to update Bubble");
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            showBubble(updateTitle, updateBody, updateParams);
-                        }
-                    } else {
+                    //if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                    //    Log.d(TAG, "Going to update Bubble");
+                    //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    //        showBubble(updateTitle, updateBody, updateParams);
+                    //    }
+                    //} else {
                         Log.d(TAG, "Going to update System Alert Window");
                         final Intent i = new Intent(mContext, WindowServiceNew.class);
                         i.putExtra(INTENT_EXTRA_PARAMS_MAP, updateParams);
@@ -143,7 +143,7 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                         i.putExtra(INTENT_EXTRA_IS_UPDATE_WINDOW, true);
                         //WindowService.enqueueWork(mContext, i);
                         mContext.startService(i);
-                    }
+                    //}
                     result.success(true);
                 } else {
                     Toast.makeText(mContext, "Please give draw over other apps permission", Toast.LENGTH_LONG).show();
@@ -152,14 +152,14 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                 break;
             case "closeSystemWindow":
                 if (checkPermission()) {
-                    if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-                        NotificationHelper.getInstance(mContext).dismissNotification();
-                    } else {
+                    //if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+                    //    NotificationHelper.getInstance(mContext).dismissNotification();
+                    //} else {
                         final Intent i = new Intent(mContext, WindowServiceNew.class);
                         i.putExtra(INTENT_EXTRA_IS_CLOSE_WINDOW, true);
                         //WindowService.dequeueWork(mContext, i);
                         mContext.startService(i);
-                    }
+                    //}
                     result.success(true);
                 } else {
                     Toast.makeText(mContext, "Please give draw over other apps permission", Toast.LENGTH_LONG).show();
