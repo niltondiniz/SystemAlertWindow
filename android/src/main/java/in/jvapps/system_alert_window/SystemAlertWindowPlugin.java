@@ -327,8 +327,8 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
         //} else
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(mContext)) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                        //Uri.parse("package:" + mContext.getPackageName()));
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + mContext.getPackageName()));
                 if (mActivity == null) {
                     if (mContext != null) {
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
