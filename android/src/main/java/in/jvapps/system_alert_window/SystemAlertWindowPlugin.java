@@ -322,9 +322,10 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public boolean askPermission() {
-        if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
-            return NotificationHelper.getInstance(mContext).areBubblesAllowed();
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        //if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+        //    return NotificationHelper.getInstance(mContext).areBubblesAllowed();
+        //} else
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!Settings.canDrawOverlays(mContext)) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + mContext.getPackageName()));
