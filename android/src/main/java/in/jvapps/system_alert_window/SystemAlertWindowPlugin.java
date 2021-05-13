@@ -7,6 +7,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.app.PendingIntent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
@@ -92,6 +93,21 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                     result.success(true);
                 } else {
                     result.success(false);
+                }
+                break;
+            case "openAppByPackage":
+                String packageName = (String) call.argument("packageName");
+
+                Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(packageName);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent pendingIntent =
+                    PendingIntent.getActivity(mContext, 0, intent, 0);
+                try {
+                    pendingIntent.send();
+                    result.success(true);
+                } catch (PendingIntent.CanceledException e){
+                    result.success(false);
+                    e.printStackTrace();
                 }
                 break;
             case "showSystemWindow":
