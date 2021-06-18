@@ -117,6 +117,8 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                     String title = (String) arguments.get(0);
                     String body = (String) arguments.get(1);
                     HashMap<String, Object> params = (HashMap<String, Object>) arguments.get(2);
+                    String soundFile = (String) arguments.get(3);
+                    Log.d("soundFile", soundFile);
                     //if (Commons.isForceAndroidBubble(mContext) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     //    Log.d(TAG, "Going to show Bubble");
                     //    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -129,6 +131,7 @@ public class SystemAlertWindowPlugin extends Activity implements MethodCallHandl
                         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                         i.putExtra(INTENT_EXTRA_IS_UPDATE_WINDOW, false);
+                        i.putExtra("soundFile", soundFile);
                         //WindowService.enqueueWork(mContext, i);
                         mContext.startService(i);
                     //}
