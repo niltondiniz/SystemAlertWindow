@@ -10,7 +10,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -58,6 +61,8 @@ public class WindowServiceNew extends Service implements View.OnTouchListener {
     private int windowWidth;
     private int windowHeight;
     private Margin windowMargin;
+    private String soundFile;
+    private MediaPlayer mediaPlayer;
 
     private LinearLayout windowView;
     private LinearLayout headerView;
@@ -93,6 +98,9 @@ public class WindowServiceNew extends Service implements View.OnTouchListener {
             @SuppressWarnings("unchecked")
             HashMap<String, Object> paramsMap = (HashMap<String, Object>) intent.getSerializableExtra(INTENT_EXTRA_PARAMS_MAP);
             mContext = this;
+            Bundle extras = intent.getExtras();
+            soundFile = extras.getString("soundFile");
+            //Log.d("soundFile", soundFile);
             boolean isCloseWindow = intent.getBooleanExtra(INTENT_EXTRA_IS_CLOSE_WINDOW, false);
             if (!isCloseWindow) {
                 assert paramsMap != null;
@@ -193,6 +201,14 @@ public class WindowServiceNew extends Service implements View.OnTouchListener {
         WindowManager.LayoutParams params = getLayoutParams();
         setWindowView(params, true);
         wm.addView(windowView, params);
+
+        if(soundFile != null){
+            //Toca o arquivo passado como parametro repetindo N x
+            mediaPlayer = MediaPlayer.create(this, Uri.parse(soundFile));
+            mediaPlayer.setLooping(true);
+            mediaPlayer.start();
+            Log.i("rrrrRRRR", "TOCANDO A MUSICA POMBAS!!!");
+        }
     }
 
     private void updateWindow(HashMap<String, Object> paramsMap) {
@@ -208,6 +224,16 @@ public class WindowServiceNew extends Service implements View.OnTouchListener {
         Log.i(TAG, "Closing the overlay window");
         try {
             if (wm != null) {
+
+                try {
+                    if (mediaPlayer != null) {
+                        Log.i("EEEEEEEEE", "vai parar a musica");
+
+                        mediaPlayer.stop();
+                    }
+                }catch (Exception e){
+                    Log.i("ERRO", e.getMessage());
+                }
                 if (windowView != null) {
                     wm.removeView(windowView);
                     windowView = null;
